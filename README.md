@@ -81,6 +81,11 @@ where 33001 is the accessible SSH port on server 192.168.0.14 where Faspex 4 is 
 
 Then do: `make deploy`
 
+### Debugging
+
+The javascript logs info in browser console, so if there is a problem , inspect the browser console
+in developer mode
+
 ## Inline validation
 
 The officially supported validation method uses the feature "inline validation".
