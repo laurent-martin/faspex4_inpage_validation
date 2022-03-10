@@ -2,11 +2,10 @@
 // This code is provide as a sample and is not supported
 // Refer to README file.
 // returns the base name of file, i.e. removes path and extension
-String.prototype.basename = function(sep) {
-  sep = sep || '\\/';
-  result=this.split(new RegExp("["+sep+"]")).pop();
+String.prototype.basename = function() {
+  result=this.substring(1 + Math.max(this.lastIndexOf('/'), this.lastIndexOf('\\')));
   if(result.lastIndexOf(".") != -1)
-	  result = result.substring(0, result.lastIndexOf("."));
+    result = result.substring(0, result.lastIndexOf("."));
   return result;
 }
 // override the function in [Faspex]/public/javascripts/send/form/fieldsets/source_shares.js
