@@ -8,7 +8,7 @@ Tested with Faspex v4.4.1.178477 Patch level 10.
 
 ## Overview
 
-This document propose a way to modify Faspex so that package ingest is validated in two steps:
+This document proposes a way to modify Faspex, so that package ingest is validated in two steps:
 
 * Metadata for Dropbox packages is validated on browser side, without interaction to server side.
 * Files contained in the package are validated during the transfer using Aspera inline validation procedure.
@@ -17,7 +17,7 @@ This document propose a way to modify Faspex so that package ingest is validated
 
 ### Elements
 
-This consists in modifying Faspex javascript code, by injecting modified javascript code on the Faspex server.
+This consists in modifying Faspex JavaScript code, by injecting modified JavaScript code on the Faspex server.
 
 Two files are placed on the Faspex server:
 
@@ -27,9 +27,9 @@ Two files are placed on the Faspex server:
 
 * `custom_browser_validation_definitions.js`
 
-  This is the file that describes per dropbox validation. Each validation function shall follow the following signature:
+  This is the file that describes per Dropbox validation. Each validation function shall follow the following signature:
 
-* The name of the function is `validate_` followed by the dropbox name, e.g. `validate_MyDropbox`
+* The name of the function is `validate_` followed by the Dropbox name, e.g. `validate_MyDropbox`
 * It takes one argument: `forminfo` which contains the list of file names to be sent. (It can be improved by adding metadata values if necessary). `forminfo.files` is an array.
 * The function shall return an array with a list of error. The array is empty if there is no error.
 
@@ -45,18 +45,18 @@ The sample validation script validates the following:
 
 * The package must contain exactly two files
 * The first file must have extension `.mxf`
-* The second file must ave extension `.xml`
+* The second file must have extension `.xml`
 * Both files must have the same basename.
 
-It is a good idea to place package submission instructions in the dropbox' Instruction area.
+It is a good idea to place package submission instructions in the Dropbox' Instruction area.
 
 ### Deployment
 
-Place both javascript (engine and definitions) files in the folder: `[Faspex]/public/javascripts`.
+Place both JavaScript (engine and definitions) files in the folder: `[Faspex]/public/javascripts`.
 On Linux `[Faspex]` is `/opt/aspera/faspex`.
 
 Make sure that those files have the same ownership and access rights than other files in the same folder.
-(typically, on Linux: `chown faspex:` and `chmod a+r` )
+(typically, on Linux: `chown faspex:` and `chmod a+r`)
 
 To activate the engine: add the following line at the end of:
 `[Faspex]/app/views/layouts/_javascripts.html.erb`
@@ -66,25 +66,24 @@ To activate the engine: add the following line at the end of:
 <%= javascript_include_tag 'custom_browser_validation_definitions' %>
 ```
 
-The line will load the custom javascript in Faspex and override the default behaviour.
+The line will load the custom JavaScript in Faspex and override the default behavior.
 
 Note that this modification is active on runtime, no need to restart Faspex.
 It will be active on next package submission page display.
 
 Alternatively, create a file named `server.txt` with the SSH parameters as follows:
 
-```
+```bash
 echo root@192.168.0.14:33001 > server.txt
 ```
 
-where 33001 is the accessible SSH port on server 192.168.0.14 where Faspex 4 is installed.
+Where 33001 is the accessible SSH port on server 192.168.0.14 where Faspex 4 is installed.
 
 Then do: `make deploy`
 
 ### Debugging
 
-The javascript logs info in browser console, so if there is a problem , inspect the browser console
-in developer mode
+The JavaScript logs info in browser console, so if there is a problem, inspect the browser console in developer mode
 
 ## Inline validation
 
